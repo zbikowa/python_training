@@ -4,8 +4,6 @@ from python_training.model.contact import Contact
 from python_training.fixture.application import Application
 
 
-
-
 @pytest.fixture
 def app(request):
     fixture = Application()
