@@ -58,7 +58,7 @@ class ContactHelper:
     def modify_contact(self):
         wd = self.app.wd
         self.open_contact_page()
-        #select modify contact image
+        #select modify contact
         wd.find_element_by_xpath("//*/tbody/tr[2]/td[8]/a/img").click()
         #change data
         wd.find_element_by_name("firstname").click()
