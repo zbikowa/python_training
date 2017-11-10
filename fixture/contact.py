@@ -1,3 +1,6 @@
+from selenium.common.exceptions import NoSuchElementException
+
+
 class ContactHelper:
 
     def __init__(self, app):
@@ -83,3 +86,12 @@ class ContactHelper:
     def return_to_contact_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
+
+    def count(self):
+        wd = self.app.wd
+        self.open_contact_page()
+        try:
+            wd.find_element_by_name("selected[]")
+            return True
+        except NoSuchElementException:
+            return False

@@ -1,3 +1,6 @@
+from selenium.common.exceptions import NoSuchElementException
+
+
 class GroupHelper:
 
     def __init__(self, app):
@@ -60,3 +63,13 @@ class GroupHelper:
     def return_to_groups_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("groups").click()
+
+    def count(self):
+        wd = self.app.wd
+        self.open_groups_page()
+        try:
+            wd.find_element_by_name("selected[]")
+            return True
+        except NoSuchElementException:
+            return False
+
