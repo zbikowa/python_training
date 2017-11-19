@@ -5,6 +5,7 @@ from python_training.fixture.application import Application
 
 fixture = None
 
+
 @pytest.fixture
 
 def app(request):
