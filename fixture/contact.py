@@ -1,4 +1,5 @@
 from selenium.common.exceptions import NoSuchElementException
+from model.contact import Contact
 
 
 class ContactHelper:
@@ -8,7 +9,9 @@ class ContactHelper:
 
     def open_contact_page(self):
         wd = self.app.wd
-        if not (wd.current_url.endswith("/index.php") and len(wd.find_element_by_name("home")) > 0):
+        #if not (wd.current_url.endswith("/index.php") and len(wd.find_element_by_name("home")) > 0):
+        #    wd.find_element_by_link_text("home").click()
+        if not wd.current_url.endswith("/addressbook/"):
             wd.find_element_by_link_text("home").click()
 
     def create(self, contact):
@@ -69,3 +72,14 @@ class ContactHelper:
             return True
         except NoSuchElementException:
             return False
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.open_contact_page()
+        contact = []
+        for element in wd.find_elements_by_name("entry"):
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            firstname = element.find_elements_by_xpath('//*[@id="content"]/form[1]/input[3]')
+            middlename = element.find_elements_by_xpath('//*[@id="content"]/form[1]/input[4]')
+            contact.append(Contact(id=id, firstname=firstname, middlename=middlename))
+        return contact
