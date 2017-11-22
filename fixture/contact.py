@@ -48,6 +48,7 @@ class ContactHelper:
         wd.find_element_by_name("update").click()
         # return to contacts
         self.return_to_contact_page()
+        self.contact_cache = None
 
     def delete_first_contact(self):
         wd = self.app.wd
@@ -59,6 +60,7 @@ class ContactHelper:
         # confirm deletion
         wd.switch_to_alert().accept()
         self.return_to_contact_page()
+        self.contact_cache = None
 
     def return_to_contact_page(self):
         wd = self.app.wd
@@ -68,18 +70,20 @@ class ContactHelper:
         wd = self.app.wd
         self.open_contact_page()
         try:
-            wd.find_element_by_name("selected[]")
-            return True
+            return len(wd.find_elements_by_name("selected[]"))
         except NoSuchElementException:
-            return False
+            return 0
+
+    contact_cache = None
 
     def get_contact_list(self):
+        # if self.contact_cache is None:
         wd = self.app.wd
         self.open_contact_page()
-        contact = []
+        self.contact_cache = []
         for element in wd.find_elements_by_name("entry"):
             id = element.find_element_by_name("selected[]").get_attribute("value")
             firstname = element.find_elements_by_xpath('//*[@id="content"]/form[1]/input[3]')
             middlename = element.find_elements_by_xpath('//*[@id="content"]/form[1]/input[4]')
-            contact.append(Contact(id=id, firstname=firstname, middlename=middlename))
-        return contact
+            self.contact_cache.append(Contact(id=id, firstname=firstname, middlename=middlename))
+        return list(self.contact_cache)
