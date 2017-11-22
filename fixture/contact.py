@@ -6,6 +6,7 @@ class ContactHelper:
 
     def __init__(self, app):
         self.app = app
+        self.contact_cache = None
 
     def open_contact_page(self):
         wd = self.app.wd
@@ -24,6 +25,7 @@ class ContactHelper:
         wd.find_element_by_name("middlename").clear()
         wd.find_element_by_name("middlename").send_keys(contact.middlename)
         wd.find_element_by_name("submit").click()
+        self.contact_cache = None
 
     def change_field_value(self, field_name, text):
         wd = self.app.wd
@@ -74,16 +76,14 @@ class ContactHelper:
         except NoSuchElementException:
             return 0
 
-    contact_cache = None
-
     def get_contact_list(self):
-        # if self.contact_cache is None:
-        wd = self.app.wd
-        self.open_contact_page()
-        self.contact_cache = []
-        for element in wd.find_elements_by_name("entry"):
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            firstname = element.find_elements_by_xpath('//*[@id="content"]/form[1]/input[3]')
-            middlename = element.find_elements_by_xpath('//*[@id="content"]/form[1]/input[4]')
-            self.contact_cache.append(Contact(id=id, firstname=firstname, middlename=middlename))
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_contact_page()
+            self.contact_cache = []
+            for element in wd.find_elements_by_name("entry"):
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                firstname = element.find_elements_by_xpath('//*[@id="content"]/form[1]/input[3]')
+                middlename = element.find_elements_by_xpath('//*[@id="content"]/form[1]/input[4]')
+                self.contact_cache.append(Contact(id=id, firstname=firstname, middlename=middlename))
         return list(self.contact_cache)
