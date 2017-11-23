@@ -39,30 +39,42 @@ class ContactHelper:
         self.change_field_value("firstname", contact.firstname)
         self.change_field_value("middlename", contact.middlename)
 
-    def modify_first_contact(self, contact):
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        #wd.find_element_by_xpath('//img[@title="Edit"]/parent::*')[index].click()
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def select_first_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+
+    def modify_contact_by_index(self, index, contact):
         wd = self.app.wd
         self.open_contact_page()
         # select modify contact
-        wd.find_element_by_xpath("//*/tbody/tr[2]/td[8]/a/img").click()
+        self.select_contact_by_index(index)
+        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         # fill contact form
         self.fill_contact_form(contact)
         # submit modification
-        wd.find_element_by_name("update").click()
+        wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
         # return to contacts
         self.return_to_contact_page()
         self.contact_cache = None
 
-    def delete_first_contact(self):
+    def modify_first_contact(self):
+        self.modify_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.open_contact_page()
-        # select first contact
-        wd.find_element_by_name("selected[]").click()
-        # submit deletion
-        wd.find_element_by_xpath("//*/form[2]/div[2]/input").click()
-        # confirm deletion
+        self.select_contact_by_index(index)
+        wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
-        self.return_to_contact_page()
         self.contact_cache = None
+
+    def delete_first_contact(self):
+        self.delete_contact_by_index(0)
 
     def return_to_contact_page(self):
         wd = self.app.wd
