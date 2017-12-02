@@ -100,10 +100,12 @@ class ContactHelper:
                 cells = row.find_elements_by_tag_name("td")
                 firstname = cells[2].text
                 lastname = cells[1].text
+                address = cells[3].text
+                email = cells[4].text
                 id = cells[0].find_element_by_tag_name("input").get_attribute("value")
                 all_phones = cells[5].text
-                self.contact_cache.append(Contact(id=id, firstname=firstname, lastname=lastname,
-                                                  all_phones_from_home_page=all_phones
+                self.contact_cache.append(Contact(id=id, firstname=firstname, lastname=lastname, address=address,
+                                                  email=email, all_phones_from_home_page=all_phones
                                                   ))
         return list(self.contact_cache)
 
@@ -131,18 +133,25 @@ class ContactHelper:
         workphone = wd.find_element_by_name("work").get_attribute("value")
         mobilephone = wd.find_element_by_name("mobile").get_attribute("value")
         secondaryphone = wd.find_element_by_name("phone2").get_attribute("value")
+        address = wd.find_element_by_name("address").get_attribute("value")
+        email = wd.find_element_by_name("email").get_attribute("value")
         return Contact(firstname=firstname, lastname=lastname, id=id, homephone=homephone,  workphone=workphone,
-                       mobilephone=mobilephone, secondaryphone=secondaryphone)
+                       mobilephone=mobilephone, secondaryphone=secondaryphone, address=address, email=email)
 
     def get_contact_from_view_page(self, index):
         wd = self.app.wd
         self.open_contact_to_view_by_index(index)
         text = wd.find_element_by_id("content").text
-        homephone = re.search('H: (.*)', text).group(1)
+        homephone = re.search('H: (.*)', text) .group(1)
         workphone = re.search('W: (.*)', text).group(1)
         mobilephone = re.search('M: (.*)', text).group(1)
         secondaryphone = re.search('P: (.*)', text).group(1)
+        email = re.search('(.*)@(.*).(.*)', text).group(3)
+        address = re.search('(.*)\n(.*)(\d)', text).group(3)
+        #street_address = re.search('^[a-zA-Z\ ]+[ \t](\d+)', text).group(0)
+        #postal_code = re.search('[\d]{2}[-]{1}[\d]{3}', test).group(0)
+
         return Contact(homephone=homephone,  workphone=workphone,
-                       mobilephone=mobilephone, secondaryphone=secondaryphone)
+                       mobilephone=mobilephone, secondaryphone=secondaryphone, email=email, address=address)
 
 
