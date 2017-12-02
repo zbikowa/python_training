@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import pytest
-from python_training.fixture.application import Application
-
+from fixture.application import Application
 
 fixture = None
 
@@ -10,7 +9,7 @@ fixture = None
 def app(request):
     global fixture
     if fixture is None:
-       fixture = Application()
+        fixture = Application()
     else:
         if not fixture.is_valid():
             fixture = Application()
@@ -23,5 +22,6 @@ def stop(request):
     def fin():
         fixture.session.ensure_logout()
         fixture.destroy()
+
     request.addfinalizer(fin)
     return fixture
