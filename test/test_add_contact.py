@@ -14,12 +14,12 @@ import string
 #     return prefix + "".join([random.choice(numbers) for i in range(random.randrange(maxlen))])
 
 
-def test_add_contact(app, json_contacts):
-    contact = json_contacts
-    old_contact = app.contact.get_contact_list()
-    app.contact.create(contact)
+def test_add_contact(app, json_contact):
+    fixture_contact = json_contact
+    old_contacts = app.contact.get_contact_list()
+    app.contact.create(fixture_contact)
     #assert len(old_contact) + 1 == len(new_contact)
-    assert len(old_contact) + 1 == app.contact.count()
+    assert len(old_contacts) + 1 == app.contact.count()
     new_contact = app.contact.get_contact_list()
-    old_contact.append(contact)
-    assert sorted(old_contact, key=Contact.id_or_max) == sorted(new_contact, key=Contact.id_or_max)
+    old_contacts.append(fixture_contact)
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contact, key=Contact.id_or_max)
