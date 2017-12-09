@@ -1,0 +1,80 @@
+[
+  {
+    "py/object": "model.contact.Contact",
+    "address": "t",
+    "all_phones_from_home_page": null,
+    "email": null,
+    "firstname": "",
+    "homephone": null,
+    "id": null,
+    "lastname": "",
+    "mobilephone": null,
+    "secondaryphone": null,
+    "workphone": null
+  },
+  {
+    "py/object": "model.contact.Contact",
+    "address": "addressofnm",
+    "all_phones_from_home_page": null,
+    "email": null,
+    "firstname": "firstname5KvT",
+    "homephone": null,
+    "id": null,
+    "lastname": "lastnamesU1i",
+    "mobilephone": null,
+    "secondaryphone": null,
+    "workphone": null
+  },
+  {
+    "py/object": "model.contact.Contact",
+    "address": "address 1QHuk",
+    "all_phones_from_home_page": null,
+    "email": null,
+    "firstname": "firstnamePu",
+    "homephone": null,
+    "id": null,
+    "lastname": "lastnameTgr9Qg",
+    "mobilephone": null,
+    "secondaryphone": null,
+    "workphone": null
+  },
+  {
+    "py/object": "model.contact.Contact",
+    "address": "addresszFzvdFTJHaM",
+    "all_phones_from_home_page": null,
+    "email": null,
+    "firstname": "firstnameS",
+    "homephone": null,
+    "id": null,
+    "lastname": "lastnameo55",
+    "mobilephone": null,
+    "secondaryphone": null,
+    "workphone": null
+  },
+  {
+    "py/object": "model.contact.Contact",
+    "address": "address5k3VyC2j7",
+    "all_phones_from_home_page": null,
+    "email": null,
+    "firstname": "firstnameM1",
+    "homephone": null,
+    "id": null,
+    "lastname": "lastnamef6KHjETC",
+    "mobilephone": null,
+    "secondaryphone": null,
+    "workphone": null
+  },
+  {
+    "py/object": "model.contact.Contact",
+    "address": "address",
+    "all_phones_from_home_page": null,
+    "email": null,
+    "firstname": "firstnameeG1CHoz",
+    "homephone": null,
+    "id": null,
+    "lastname": "lastname",
+    "mobilephone": null,
+    "secondaryphone": null,
+    "workphone": null
+  }
+]
