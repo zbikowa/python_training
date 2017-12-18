@@ -11,8 +11,6 @@ class ContactHelper:
 
     def open_contact_page(self):
         wd = self.app.wd
-        #if not (wd.current_url.endswith("/index.php") and len(wd.find_element_by_name("home")) > 0):
-        #    wd.find_element_by_link_text("home").click()
         if not wd.current_url.endswith("/addressbook/"):
             wd.find_element_by_link_text("home").click()
 
@@ -55,7 +53,7 @@ class ContactHelper:
 
     def select_contact_by_id(self, id):
         wd = self.app.wd
-        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+        wd.find_element_by_css_selector("input[value='%s']" % id)
 
     def select_first_contact(self):
         wd = self.app.wd
@@ -71,6 +69,19 @@ class ContactHelper:
         self.fill_contact_form(contact)
         # submit modification
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+        # return to contacts
+        self.return_to_contact_page()
+        self.contact_cache = None
+
+    def modify_contact_by_id(self, id, contact):
+        wd = self.app.wd
+        self.open_contact_page()
+        self.select_contact_by_id(id)
+        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+        # fill contact form
+        self.fill_contact_form(contact)
+        # submit modification
+        wd.find_element_by_xpath("//*[@id='content']/form[1]/input[22]").click()
         # return to contacts
         self.return_to_contact_page()
         self.contact_cache = None
